@@ -19,12 +19,9 @@ Download Lite OS
 cd rpi3b-baremetal
 wget https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-01-12/2021-01-11-raspios-buster-armhf-lite.zip
 unzip 2021-01-11-raspios-buster-armhf-lite.zip
-sudo fdisk -l 2021-01-11-raspios-buster-armhf-lite.img
-plugin a formated sd card to PC ( see below to format sd card )
-Do following 2 steps only once to populate boot dir from Lite OS to sd card.
-  1. make populate_boot
-  2. eject sd card.
-plugin sd card to PC.
+Use balenaEtcher to burn img to sd card.
+eject sd card.
+Plugin sd card to PC.
 make clean
 make test
 make burn_sdcard
@@ -43,42 +40,6 @@ Unplug serial USB cable from PC.
 Type "exit" on PC.
 
 -------------------------------------------------------------------------
-To format sd card using PC:
-plugin sd card to PC.
-sudo dd if=/dev/zero of=/dev/mmcblk0 bs=1M count=1024 conv=notrunc,fsync
-sudo fdisk /dev/mmcblk0 <<EOF
-o
-n
-p
-1
-8192
-532479
-n
-p
-2
-532480
-
-t
-1
-c
-t
-2
-83
-a
-1
-w
-q
-EOF
-sync
-eject sd card.
-Plugin sd card to PC.
-sudo fdisk -l /dev/mmcblk0
-sudo mkfs.vfat -n boot /dev/mmcblk0p1
-sudo mkfs.ext4 -L rootfs /dev/mmcblk0p2
-sync
-eject sd card.
-
------------------------------------------------------------------------
 Here are the summary of the tests: ( see https://pi4j.com/1.2/pins/model-3b-rev1.html )
 These tests used Seeed Grove starter kit LED, button, buzzer, Grove-LCD RGB Backlight V3.0 JHD1313M2, Analog Servo and Adafruit SSD1306 128x32 SPI OLED Display.
 1. uart test. 
